@@ -168,6 +168,16 @@
   .tfa-timer{font-size:.8rem;color:var(--muted);}
   .tfa-error{margin-top:14px;display:none;color:#f87171;font-size:.87rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:10px;padding:10px 14px;}
 
+  /* SUB-TAB NAV */
+  .sub-tab-nav{display:flex;gap:8px;margin-bottom:20px;}
+  .sub-tab-btn{display:flex;align-items:center;gap:6px;padding:9px 22px;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;font-weight:600;border:1px solid var(--border);cursor:pointer;transition:all .22s ease;background:var(--surface2);color:var(--muted);white-space:nowrap;}
+  .sub-tab-btn:hover{color:var(--text);border-color:rgba(56,189,248,0.3);}
+  .sub-tab-btn.active{background:rgba(56,189,248,0.12);border-color:rgba(56,189,248,0.4);color:var(--accent);}
+
+  /* SUB-TAB CONTENT */
+  .sub-tab-content{display:none;}
+  .sub-tab-content.active{display:block;animation:fadeUp .3s ease both;}
+
   /* FOOTER */
   footer{position:relative;z-index:5;text-align:center;padding:28px 24px 48px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem;}
   footer a{color:var(--accent);text-decoration:none;}
@@ -214,6 +224,14 @@
       <span>Để mua hàng, click vào sản phẩm để xem chi tiết rồi liên hệ Admin qua Facebook.</span>
     </div>
 
+    <!-- SUB-TAB NAV -->
+    <div class="sub-tab-nav">
+      <button class="sub-tab-btn active" onclick="switchSub('tienich')" id="sbtn-tienich">✨ Tiện ích</button>
+      <button class="sub-tab-btn" onclick="switchSub('mangxahoi')" id="sbtn-mangxahoi">🌐 Mạng xã hội</button>
+    </div>
+
+    <!-- SUB-TAB: TIỆN ÍCH -->
+    <div class="sub-tab-content active" id="sub-tienich">
     <div class="acc-list">
 
       <!-- ChatGPT Plus -->
@@ -370,6 +388,65 @@
         </div>
       </div>
 
+      <!-- CapCut Pro -->
+      <div class="acc-item" onclick="toggleAcc(this)">
+        <div class="acc-trigger">
+          <div class="acc-icon">🎞️</div>
+          <div class="acc-info">
+            <div class="acc-name">CapCut Pro</div>
+            <div class="acc-meta">Chỉnh video chuyên nghiệp • Không watermark • 3 gói</div>
+          </div>
+          <div class="acc-right">
+            <span class="acc-price-preview">từ 35.000₫</span>
+            <div class="acc-chevron">▾</div>
+          </div>
+        </div>
+        <div class="acc-body">
+          <div class="acc-body-inner">
+            <div class="plan-row">
+              <div class="plan-info">
+                <div class="plan-name">1 Tháng</div>
+                <div class="plan-features">CapCut Pro • Không watermark • Hiệu ứng Premium</div>
+              </div>
+              <div class="plan-price">35.000₫</div>
+              <div class="plan-btns">
+                <a class="btn btn-primary" href="https://www.facebook.com/van.duy.470557" target="_blank">Admin 1</a>
+                <a class="btn btn-secondary" href="https://www.facebook.com/khanh.linh.983238" target="_blank">Admin 2</a>
+              </div>
+            </div>
+            <div class="plan-row">
+              <div class="plan-info">
+                <div class="plan-name">3 Tháng</div>
+                <div class="plan-features">CapCut Pro • Không watermark • Hiệu ứng Premium</div>
+              </div>
+              <div class="plan-price">89.000₫</div>
+              <div class="plan-btns">
+                <a class="btn btn-primary" href="https://www.facebook.com/van.duy.470557" target="_blank">Admin 1</a>
+                <a class="btn btn-secondary" href="https://www.facebook.com/khanh.linh.983238" target="_blank">Admin 2</a>
+              </div>
+            </div>
+            <div class="plan-row">
+              <div class="plan-info">
+                <div class="plan-name">6 Tháng ⭐</div>
+                <div class="plan-features">CapCut Pro • Không watermark • Hiệu ứng Premium</div>
+              </div>
+              <div class="plan-price gold">149.000₫</div>
+              <div class="plan-btns">
+                <a class="btn btn-gold" href="https://www.facebook.com/van.duy.470557" target="_blank">Admin 1</a>
+                <a class="btn btn-secondary" href="https://www.facebook.com/khanh.linh.983238" target="_blank">Admin 2</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /acc-list -->
+    </div><!-- /sub-tienich -->
+
+    <!-- SUB-TAB: MẠNG XÃ HỘI -->
+    <div class="sub-tab-content" id="sub-mangxahoi">
+    <div class="acc-list">
+
       <!-- TikTok -->
       <div class="acc-item" onclick="toggleAcc(this)">
         <div class="acc-trigger">
@@ -442,6 +519,8 @@
       </div>
 
     </div><!-- /acc-list -->
+    </div><!-- /sub-mangxahoi -->
+
   </div>
 </div>
 
@@ -491,6 +570,19 @@
 </footer>
 
 <script>
+// ── SUB-TAB ──
+function switchSub(name){
+  document.querySelectorAll('.sub-tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.sub-tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('sub-'+name).classList.add('active');
+  document.getElementById('sbtn-'+name).classList.add('active');
+  // đóng tất cả accordion khi đổi sub-tab
+  document.querySelectorAll('.acc-item.open').forEach(el=>{
+    el.classList.remove('open');
+    el.querySelector('.acc-body').style.maxHeight='0';
+  });
+}
+
 // ── TAB ──
 function switchTab(name){
   document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
